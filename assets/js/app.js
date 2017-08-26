@@ -47,20 +47,80 @@ $("#add-employee").on("click", function(event) {
 
 // Create Firebase "watcher" Hint: .on("value")
 // database.ref().on("value", function(snapshot) {
-	database.ref().on("child_added", function(snapshot) {
-    console.log(snapshot.val());
-    console.log(snapshot.val().name);
+// database.ref().on("child_added", function(snapshot) {
+
+database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+
+
+    var sv = snapshot.val();
+
+    // Console.loging the last user's data
+    console.log(sv.name);
+    console.log(sv.role);
+    console.log(sv.sdate);
+    console.log(sv.rate);
+
+
+
+
+    // console.log(snapshot.val());
+    // console.log(snapshot.val().name);
     // console.log(snapshot.val().role);
     // console.log(snapshot.val().sdate);
     // console.log(snapshot.val().rate);
 
-    //change html to reflect the user input
-    $("#employeeName").html(snapshot.val().name);
-    $("#role").html(snapshot.val().role);
-    $("#startDate").html(snapshot.val().sdate);
-    $("#monthyRate").html(snapshot.val().rate);
+    // change html to reflect the user input
+    $("#employeeName").html(sv.name);
+    $("#role").html(sv.role);
+    $("#startDate").html(sv.sdate);
+    $("#monthyRate").html(sv.rate);
+
+    // var content = '';
+    //         snapshot.forEach(function(data){
+    //             var val = data.val();
+    //             content +='<tr>';
+    //             content += '<td>' + sv.name + '</td>';
+    //             content += '<td>' + sv.role + '</td>';
+    //             content += '<td>' + sv.sdate + '</td>';
+    //             content += '<td>' + val.imagen + '</td>';
+    //             content += '<td>' + val.tipo + '</td>';
+    //             content += '<td>' + val.udisplayName + '</td>';
+    //             content += '<td>' + val.uemail + '</td>';
+    //             content += '</tr>';
+    //         });
+    //         $('#myTable').append(content);
 
 
 }, function(errorObject) {
     console.log("Errors handled: " + errorObject.code);
 });
+
+
+//function to populate row
+
+// $.each(val, function(i, item) {
+
+//        tr = $('<tr>').append('<td>' + (sv.name) + '</td>' + 
+//                              '<td>' + (sv.role) + '</td>');
+
+//        $("#scalaapi").append(tr);
+//   });
+
+    database.ref().once('value', function(snapshot){
+        if(snapshot.exists()){
+            var content = '';
+            snapshot.forEach(function(data){
+                var val = data.val();
+                content +='<tr>';
+                content += '<td>' + val.descripcion + '</td>';
+                content += '<td>' + val.direccion + '</td>';
+                content += '<td>' + val.estado + '</td>';
+                content += '<td>' + val.imagen + '</td>';
+                content += '<td>' + val.tipo + '</td>';
+                content += '<td>' + val.udisplayName + '</td>';
+                content += '<td>' + val.uemail + '</td>';
+                content += '</tr>';
+            });
+            $('#ex-table').append(content);
+        }
+    });
