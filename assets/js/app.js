@@ -43,13 +43,32 @@ $("#add-employee").on("click", function(event) {
         dateAdded: firebase.database.ServerValue.TIMESTAMP
     });
 
+    //update table
+
+
+
+
+
 });
 
 // Create Firebase "watcher" Hint: .on("value")
 // database.ref().on("value", function(snapshot) {
 // database.ref().on("child_added", function(snapshot) {
 
-database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+// 	// console.log(snapshot.val());
+// 	var test = snapshot.val();
+
+// 	// for (var i = test.length - 1; i >= 0; i--) {
+// 	// 	console.log(test[i]);
+// 	// }
+
+// 	for (var i = 0; i < test.length; i++) {
+// 		console.log(i);
+// 	}
+// });
+
+// database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+database.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
 
 
     var sv = snapshot.val();
@@ -70,25 +89,25 @@ database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", functi
     // console.log(snapshot.val().rate);
 
     // change html to reflect the user input
-    $("#employeeName").html(sv.name);
-    $("#role").html(sv.role);
-    $("#startDate").html(sv.sdate);
-    $("#monthyRate").html(sv.rate);
+    // $("#employeeName").html(sv.name);
+    // $("#role").html(sv.role);
+    // $("#startDate").html(sv.sdate);
+    // $("#monthyRate").html(sv.rate);
 
-    // var content = '';
-    //         snapshot.forEach(function(data){
-    //             var val = data.val();
-    //             content +='<tr>';
-    //             content += '<td>' + sv.name + '</td>';
-    //             content += '<td>' + sv.role + '</td>';
-    //             content += '<td>' + sv.sdate + '</td>';
-    //             content += '<td>' + val.imagen + '</td>';
-    //             content += '<td>' + val.tipo + '</td>';
-    //             content += '<td>' + val.udisplayName + '</td>';
-    //             content += '<td>' + val.uemail + '</td>';
-    //             content += '</tr>';
-    //         });
-    //         $('#myTable').append(content);
+    // $("#employeeName").append(sv.name);
+    // $("#role").html(sv.role);
+    // $("#startDate").html(sv.sdate);
+    // $("#monthyRate").html(sv.rate);
+
+    var content = '';
+        content += '<tr>';
+        content += '<td>' + sv.name + '</td>';
+        content += '<td>' + sv.role + '</td>';
+        content += '<td>' + sv.sdate + '</td>';
+
+        content += '</tr>';
+    // });
+    $('#myTable').append(content);
 
 
 }, function(errorObject) {
@@ -106,21 +125,21 @@ database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", functi
 //        $("#scalaapi").append(tr);
 //   });
 
-    database.ref().once('value', function(snapshot){
-        if(snapshot.exists()){
-            var content = '';
-            snapshot.forEach(function(data){
-                var val = data.val();
-                content +='<tr>';
-                content += '<td>' + val.descripcion + '</td>';
-                content += '<td>' + val.direccion + '</td>';
-                content += '<td>' + val.estado + '</td>';
-                content += '<td>' + val.imagen + '</td>';
-                content += '<td>' + val.tipo + '</td>';
-                content += '<td>' + val.udisplayName + '</td>';
-                content += '<td>' + val.uemail + '</td>';
-                content += '</tr>';
-            });
-            $('#ex-table').append(content);
-        }
-    });
+// database.ref().once('value', function(snapshot){
+//     if(snapshot.exists()){
+//         var content = '';
+//         snapshot.forEach(function(data){
+//             var val = data.val();
+//             content +='<tr>';
+//             content += '<td>' + val.descripcion + '</td>';
+//             content += '<td>' + val.direccion + '</td>';
+//             content += '<td>' + val.estado + '</td>';
+//             content += '<td>' + val.imagen + '</td>';
+//             content += '<td>' + val.tipo + '</td>';
+//             content += '<td>' + val.udisplayName + '</td>';
+//             content += '<td>' + val.uemail + '</td>';
+//             content += '</tr>';
+//         });
+//         $('#ex-table').append(content);
+//     }
+// });
