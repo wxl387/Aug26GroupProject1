@@ -24,7 +24,7 @@ var rate = 0;
 // Capture Button Click
 $("#add-employee").on("click", function(event) {
     event.preventDefault();
-    alert("button clicked");
+    // alert("button clicked");
     // Grabbed values from text boxes
     name = $("#employee-name").val().trim(); //
     role = $("#employee-role").val().trim();
@@ -43,4 +43,24 @@ $("#add-employee").on("click", function(event) {
         dateAdded: firebase.database.ServerValue.TIMESTAMP
     });
 
+});
+
+// Create Firebase "watcher" Hint: .on("value")
+// database.ref().on("value", function(snapshot) {
+	database.ref().on("child_added", function(snapshot) {
+    console.log(snapshot.val());
+    console.log(snapshot.val().name);
+    // console.log(snapshot.val().role);
+    // console.log(snapshot.val().sdate);
+    // console.log(snapshot.val().rate);
+
+    //change html to reflect the user input
+    $("#employeeName").html(snapshot.val().name);
+    $("#role").html(snapshot.val().role);
+    $("#startDate").html(snapshot.val().sdate);
+    $("#monthyRate").html(snapshot.val().rate);
+
+
+}, function(errorObject) {
+    console.log("Errors handled: " + errorObject.code);
 });
