@@ -24,7 +24,7 @@ var rate = 0;
 // Capture Button Click
 $("#add-employee").on("click", function(event) {
     event.preventDefault();
-
+    alert("button clicked");
     // Grabbed values from text boxes
     name = $("#employee-name").val().trim(); //
     role = $("#employee-role").val().trim();
